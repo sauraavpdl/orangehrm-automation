@@ -66,33 +66,24 @@ def test_logout(driver):
     logger.info("Starting test: logout")
 
     driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
-    logger.info("Navigated to login page")
+    wait = WebDriverWait(driver, 10)
 
-    wait=WebDriverWait(driver, 10)
-    wait.until(EC.presence_of_element_located((By.NAME, "username")))
-
-    username_field = driver.find_element(By.NAME, "username")
-    username_field.send_keys("Admin")   
-    password_field= driver.find_element(By.NAME,"password")
+    username_field = wait.until(EC.presence_of_element_located((By.NAME, "username")))
+    username_field.send_keys("Admin")
+    password_field = driver.find_element(By.NAME, "password")
     password_field.send_keys("admin123")
-
-    login_button = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
-    login_button.click() 
-    logger.info("Clicked login button")   
+    driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+    logger.info("Logged in successfully")
 
     wait.until(EC.visibility_of_element_located((By.XPATH, "//h6[text()='Dashboard']")))
+    logger.info("Dashboard confirmed loaded")
 
-    logger.info("Logged in successfully, proceeding to logout")
-
-    profile_icon = driver.find_element(By.CSS_SELECTOR, "p.oxd-userdropdown-name")
-    profile_icon.click()
-    logger.info("Profile Icon clicked, waiting for logout button to be visible")
- 
-
+    # Now logout
     logout_button = driver.find_element(By.XPATH, "//a[@href='/web/index.php/auth/logout']")
     logout_button.click()
-    logger.info("Clicked logout button")
+    logger.info("Clicked logout")
 
-    wait.until(EC.presence_of_element_located((By.NAME, "username")))
-    logger.info("Test passed: User logged out successfully, back to login page")
+    wait.until(EC.visibility_of_element_located((By.NAME, "username")))
+    assert "auth/login" in driver.url
+    logger.info("Test passed: user redirected to login page")
 
