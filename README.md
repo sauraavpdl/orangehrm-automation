@@ -23,8 +23,8 @@ orangehrm-automation/
 ## Test Cases Covered
 | ID | Description | Status |
 |---|---|---|
-| TC01 | Verify user can log in with valid credentials | ✅ Automated |
-| TC02 | Verify user cannot log in with invalid credentials | 📝 Documented (automation in progress) |
+| TC01 | Verify user can log in with valid credentials | Automated |
+| TC02 | Verify user cannot log in with invalid credentials | Automated |
 
 ## Key Practices Used
 - **Fixtures** (`conftest.py`) for reusable browser setup/teardown
