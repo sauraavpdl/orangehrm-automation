@@ -27,6 +27,7 @@ orangehrm-automation/
 2. TC02 - Verify user cannot log in with invalid credentials | Automated |
 3. TC03 - Verify user can logout from the site | Automated |
 4. TC04 - Verify user can add new employee | Automated |
+5. TC05 - Verify user can add new employee with login details |Automated|
 
 
 ## Key Practices Used

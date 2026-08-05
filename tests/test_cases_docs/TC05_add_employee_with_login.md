@@ -21,6 +21,7 @@ Employee is created successfully with the uploaded photo and login credentials, 
 
 ## Test Data
 - First Name: Jane
+- Middle Name: Roth
 - Last Name: Smith
 - Username: jane.smith
 - Password: Test@1234
