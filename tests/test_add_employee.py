@@ -7,9 +7,10 @@ from utils import login
 from pathlib import Path
 import time
 
+
 logger = logging.getLogger(__name__)
 
-def test_add_employee(driver):
+def test_add_employee(driver,generate_time_based_emp_id):
     """Verify user can add a new employee successfully (TC04)."""
     first_name = "John1"
     last_name = "Doe"
@@ -32,10 +33,12 @@ def test_add_employee(driver):
 
     first_name_field = driver.find_element(By.NAME, "firstName")
     first_name_field.send_keys(first_name)
-    time.sleep(5)  # Adding a small delay to ensure the input is registered
-
+    
     last_name_field = driver.find_element(By.NAME, "lastName")
     last_name_field.send_keys(last_name)
+
+    emp_id_field = driver.find_element(By.XPATH, "//label[text()='Employee Id']/parent::div/following-sibling::div[1]//input")
+    emp_id_field.send_keys(generate_time_based_emp_id)   
 
     save_button = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
     save_button.click()
@@ -46,10 +49,10 @@ def test_add_employee(driver):
     name_heading = driver.find_element(By.CSS_SELECTOR, "div.orangehrm-edit-employee-name h6")
     assert full_name in name_heading.text
     logger.info(f"Test passed: Employee '{full_name}' added successfully")
+    
 
-
-def test_add_employee_with_login_details(driver):
-    ### Verify user can add a new employee with login details successfully (TC05).###
+def test_add_employee_with_login_details(driver,generate_time_based_emp_id):
+#     ### Verify user can add a new employee with login details successfully (TC05).###
     first_name = "Jane"
     middle_name = "Roth"
     last_name = "Smith"
@@ -79,6 +82,9 @@ def test_add_employee_with_login_details(driver):
     last_name_field = driver.find_element(By.NAME, "lastName")
     last_name_field.send_keys(last_name)
     logger.info(f"Entered employee details: {first_name} {middle_name} {last_name}")
+
+    emp_id_field = driver.find_element(By.XPATH, "//label[text()='Employee Id']/parent::div/following-sibling::div[1]//input")
+    emp_id_field.send_keys(generate_time_based_emp_id) 
 
     login_details_checkbox=driver.find_element(By.CLASS_NAME,"oxd-switch-wrapper")
     login_details_checkbox.click()

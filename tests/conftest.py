@@ -5,6 +5,8 @@ from selenium import webdriver
 # from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+import datetime
+import random
 
 
 # ---- Logger setup ----
@@ -28,3 +30,9 @@ def driver():
     yield driver
     logger.info("Closing browser")
     driver.quit()
+
+
+
+@pytest.fixture
+def generate_time_based_emp_id():
+    return datetime.datetime.now().strftime("d%M%S")
