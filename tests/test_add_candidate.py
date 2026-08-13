@@ -1,5 +1,3 @@
-from email.mime import base
-
 import pytest
 import logging
 from selenium.webdriver.common.by import By
