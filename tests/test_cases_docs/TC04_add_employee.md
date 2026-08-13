@@ -8,7 +8,7 @@
 - User has navigated to PIM > Add Employee
 
 ## Test Steps
-1. Enter First Name "John"
+1. Enter First Name "John1"
 2. Enter Last Name "Doe"
 3. Leave Employee ID as auto-generated (or optionally edit it)
 4. Leave "Create login details" toggle OFF
@@ -18,5 +18,5 @@
 User is redirected to the employee's Personal Details page, with the page displaying the employee's full name ("John Doe") as the heading
 
 ## Test Data
-- First Name: John
+- First Name: John1
 - Last Name: Doe

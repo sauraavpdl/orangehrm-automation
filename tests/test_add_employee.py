@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def test_add_employee(driver,generate_time_based_emp_id):
     """Verify user can add a new employee successfully (TC04)."""
-    first_name = "John1"
+    first_name = "John121"
     last_name = "Doe"
 
     logger.info("Opening the OrangeHRM application and logging in")
@@ -25,10 +25,11 @@ def test_add_employee(driver,generate_time_based_emp_id):
     wait = WebDriverWait(driver, 10)
     wait.until(EC.presence_of_element_located((By.XPATH, "//h6[text()='PIM']")))
     logger.info("PIM module loaded successfully")
-
+    wait.until(EC.invisibility_of_element((By.CLASS_NAME,"oxd-loading-spinner")))
     add_employee_button = driver.find_element(By.XPATH, "//button[text()=' Add ']")
     add_employee_button.click()
-    wait.until(EC.presence_of_element_located((By.NAME, "firstName")))
+    wait.until(EC.invisibility_of_element((By.CLASS_NAME,"oxd-loading-spinner")))
+    wait.until(EC.element_to_be_clickable((By.NAME, "firstName")))
     logger.info("Add Employee page loaded successfully")
 
     first_name_field = driver.find_element(By.NAME, "firstName")
@@ -52,7 +53,7 @@ def test_add_employee(driver,generate_time_based_emp_id):
     
 
 def test_add_employee_with_login_details(driver,generate_time_based_emp_id):
-#     ### Verify user can add a new employee with login details successfully (TC05).###
+    """Verify user can add a new employee with login details successfully (TC05)."""
     first_name = "Jane"
     middle_name = "Roth"
     last_name = "Smith"
@@ -106,8 +107,7 @@ def test_add_employee_with_login_details(driver,generate_time_based_emp_id):
     confirm_password_field.send_keys(password) 
     logger.info("Entered confirm password for the new employee login details")
 
-    # status=driver.find_element(By.XPATH,"//label[text()='Enabled']")
-
+    
     base_dir=Path(__file__).parent.parent
     photo_path=base_dir / "resources" / "images"/"employee.png"
     driver.find_element(By.CLASS_NAME, "oxd-file-input").send_keys(str(photo_path))

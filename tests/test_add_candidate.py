@@ -14,8 +14,8 @@ logger=logging.getLogger(__name__)
 logger.info("Starting test: test_add_candidate")
 
 def test_add_candidate(driver):
-    """Verify user can add a new candidate successfully (TC07)."""
-    first_name = "Alice"
+    """Verify user can add a new candidate successfully (TC08)."""
+    first_name = "Alice2"
     middle_name = "M"
     last_name = "Johnson1"
     email = "alicemjohnson1@yopmail.com"

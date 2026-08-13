@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.mark.smoke
 def test_valid_login(driver):
+    """Verify user can log in with valid credentials (TC01)."""
     logger.info("Starting test: valid login")
 
     driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
