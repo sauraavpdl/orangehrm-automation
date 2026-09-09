@@ -6,9 +6,11 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
+
+    url = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
         
     def open(self):
-        self.driver.get(self.URL)
+        self.driver.get(self.url)
 
     def click(self, locator):
         self.wait.until(EC.element_to_be_clickable(locator)).click()

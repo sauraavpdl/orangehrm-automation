@@ -7,6 +7,7 @@ from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import datetime
 import random
+from pages.login_page import LoginPage
 
 
 # ---- Logger setup ----
@@ -26,10 +27,19 @@ def driver():
     # logger.info("Launching Chrome browser")
     # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
+    driver.get("https://opensource-demo.orangehrmlive.com/")
     driver.maximize_window()
     yield driver
     logger.info("Closing browser")
     driver.quit()
+
+@pytest.fixture
+def logged_in_driver(driver):
+    login_page = LoginPage(driver)
+    login_page.enter_username("Admin")
+    login_page.enter_password("admin123")
+    login_page.click_login()
+    return driver
 
 
 

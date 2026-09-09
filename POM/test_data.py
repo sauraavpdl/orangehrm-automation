@@ -1,4 +1,0 @@
-VALID_USERNAME = "Admin"
-VALID_PASSWORD = "admin123"
-INVALID_USERNAME = "invaliduser"
-INVALID_PASSWORD = "invalidpass"
