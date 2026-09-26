@@ -1,12 +1,11 @@
 import pytest
 import logging
 from selenium import webdriver
-# from selenium.webdriver.chrome.service import Service
-# from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import datetime
-import random
 from pages.login_page import LoginPage
 
 
@@ -24,14 +23,19 @@ logger = logging.getLogger(__name__)
 # ---- Reusable browser fixture ----
 @pytest.fixture
 def driver():
-    # logger.info("Launching Chrome browser")
-    # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
+    browser_name = "chrome"  # just change this line instead of commenting code
+
+    if browser_name == "chrome":
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    elif browser_name == "edge":
+        driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
+
     driver.get("https://opensource-demo.orangehrmlive.com/")
     driver.maximize_window()
     yield driver
-    logger.info("Closing browser")
     driver.quit()
+
+# ---AutoLogin---
 
 @pytest.fixture
 def logged_in_driver(driver):
