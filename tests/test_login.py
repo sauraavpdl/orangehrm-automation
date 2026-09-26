@@ -23,9 +23,19 @@ def test_valid_login(driver):
 
 def test_invalid_login(driver):
     login_page_obj= login_page.LoginPage(driver)
+
+    logger.info("Navigating to login page")
     login_page_obj.open()
+
+    logger.info("Entering invalid username")
     login_page_obj.enter_username(login_data.INVALID_USERNAME)
+
+    logger.info("Entering invalid password")
     login_page_obj.enter_password(login_data.INVALID_PASSWORD)
+
+    logger.info("Clicking login button")
     login_page_obj.click_login()
-    assert login_page_obj.get_error_message()== "Invalid credentials"
+
+    actual_error=login_page_obj.get_error_message() 
+    assert actual_error == "Invalid credentials" , "Test Failed"
     logger.info("test passed")
