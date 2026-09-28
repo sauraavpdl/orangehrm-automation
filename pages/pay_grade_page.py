@@ -1,5 +1,8 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
 
 
@@ -13,6 +16,8 @@ class AddPayGradePage(BasePage):
     NAME_FIELD=(By.XPATH,"//label[normalize-space(.)='Name']/parent::div/following-sibling::div/input")
     SAVE_BUTTON= (By.XPATH,"//button[@type='submit']")
     CANCEL_BUTTON= (By.XPATH,"//button[normalize-space(.)='Cancel']")
+    TOAST_TITLE = (By.XPATH, "//p[contains(@class,'oxd-text--toast-title') and text()='Success']")
+    CLOSE_TOASTER=(By.CSS_SELECTOR, ".oxd-toast-close")
 
     def click_admin_menu(self):
             self.click(self.ADMIN_MENU)
@@ -35,4 +40,9 @@ class AddPayGradePage(BasePage):
 
     def cancel(self):
            self.click(self.CANCEL_BUTTON)
+
+
+    def confirm(self):
+          return self.get_value(self.NAME_FIELD)
         
+            
