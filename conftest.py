@@ -1,10 +1,6 @@
 import pytest
 import logging
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.edge.service import Service
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import datetime
 from pages.login_page import LoginPage
 
@@ -26,9 +22,9 @@ def driver():
     browser_name = "chrome"  # just change this line instead of commenting code
 
     if browser_name == "chrome":
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        driver = webdriver.Chrome()
     elif browser_name == "edge":
-        driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
+        driver = webdriver.Edge()
 
     driver.get("https://opensource-demo.orangehrmlive.com/")
     driver.maximize_window()
