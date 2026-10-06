@@ -1,13 +1,15 @@
 from pages.pay_grade_page import AddPayGradePage
-# from utils.wait_utils import wait_for_toast_text
+from utils.data_generator import unique_name
 import logging
 
 
 def test_add_pay_grade_shows_success_toast(logged_in_driver):
-    name = "Secretary10191"
+    grade_name = unique_name("Secretary")
+
     logging.info("Starting test: test_add_pay_grade")
     AddPayGradeObj = AddPayGradePage(logged_in_driver)
 
+    #Navigate
     logging.info("Navigating to the pay grade page")
     AddPayGradeObj.click_admin_menu()
     AddPayGradeObj.click_job_title_menu()
@@ -16,15 +18,17 @@ def test_add_pay_grade_shows_success_toast(logged_in_driver):
     logging.info("Clicking add button")
     AddPayGradeObj.click_add_button()
 
-    logging.info("Entering pay grade name")
-    AddPayGradeObj.enter_name(name)
+    # Details
+    logging.info(f"Entering pay grade name: %s",grade_name)
+    AddPayGradeObj.enter_name(grade_name)
 
     logging.info("Clicking save button")
     AddPayGradeObj.save()
 
-    logging.info("Checking success toast")
-    
-    assert AddPayGradeObj.confirm() == name
+    #Assertion
+    logging.info("Checking success")
+    name = AddPayGradeObj.confirm() 
+    assert name==grade_name , f"Expected {grade_name} but got {name} "
 
     logging.info("Test Pass")
 
