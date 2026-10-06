@@ -64,6 +64,8 @@ class AddEmployeePage(BasePage):
     def click_save_button(self):
         self.click(self.SAVE_BUTTON)
 
-    def get_employee_name_heading(self, expected_full_name):
-        self.wait.until(EC.text_to_be_present_in_element(self.EMPLOYEE_NAME_HEADING, expected_full_name))
-        return self.get_text(self.EMPLOYEE_NAME_HEADING)
+    
+
+   
+    
+
