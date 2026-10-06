@@ -1,20 +1,24 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class AddJobTitlePage(BasePage):
 
     ADMIN_MENU= (By.XPATH,"//span[normalize-space(.)='Admin']")
-    JOB_TITLE_MENU= (By.XPATH,"//span[normalize-space(.)='Jobs']")
+    JOB_TITLE_MENU= (By.XPATH,"//span[normalize-space(.)='Job']")
     JOB_TITLE_SUBMENU= (By.XPATH,"//a[normalize-space(.)='Job Titles']")
     ADD_BUTTON= (By.XPATH,"//button[normalize-space(.)='Add']")
 
 
-    JOB_TITLE_INPUT= (By.XPATH,"//label[normalize-space(.)='Job Title')]/parent::div/following-sibling::div")
-    JOB_DESCRIPTION_INPUT= (By.XPATH,"//label[normalize-space(.)='Job Description']/parent::div/following-sibling::div")
+    JOB_TITLE_INPUT= (By.XPATH,"//label[normalize-space(.)='Job Title']/parent::div/following-sibling::div/input")
+    JOB_DESCRIPTION_INPUT= (By.XPATH,"//label[normalize-space(.)='Job Description']/parent::div/following-sibling::div/textarea")
     NOTE_INPUT= (By.XPATH,"//label[normalize-space(.)='Note']//parent::div/following-sibling::div/textarea")
 
     SUBMIT_BUTTON= (By.XPATH,"//button[@type='submit']")
     CANCEL_BUTTON= (By.XPATH,"//button[@type='button']")
+
+    TOAST_MESSAGE= (By.XPATH, "//p[@class='oxd-text--toast-message']")
 
     def click_admin_menu(self):
         self.click(self.ADMIN_MENU)
@@ -43,3 +47,17 @@ class AddJobTitlePage(BasePage):
 
     def click_cancel_button(self):
         self.click(self.CANCEL_BUTTON)
+
+    def toast_message(self):
+       return self.get_toast_message()
+        
+
+    def toast_title(self):
+        return self.get_toast_title()
+
+    def toast_close(self):
+        return self.wait_for_toast()
+
+    
+
+    
