@@ -1,9 +1,13 @@
+import logging
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 
-class AddEmployeePage(BasePage):
+logger = logging.getLogger(__name__)
 
+
+class AddEmployeePage(BasePage):
     PIM_LINK = (By.XPATH, "//span[normalize-space()='PIM']")
     PIM_HEADER = (By.XPATH, "//h6[text()='PIM']")
     LOADING_SPINNER = (By.CLASS_NAME, "oxd-loading-spinner")
@@ -23,49 +27,69 @@ class AddEmployeePage(BasePage):
     SAVE_BUTTON = (By.CSS_SELECTOR, "button[type='submit']")
     EMPLOYEE_NAME_HEADING = (By.CSS_SELECTOR, "div.orangehrm-edit-employee-name h6")
 
+
     def click_pim_link(self):
+        logger.info("Opening PIM module")
         self.click(self.PIM_LINK)
         self.wait.until(EC.presence_of_element_located(self.PIM_HEADER))
 
     def click_add_employee_button(self):
+        logger.info("Clicking Add employee button")
         self.wait.until(EC.invisibility_of_element(self.LOADING_SPINNER))
         self.click(self.ADD_EMPLOYEE_BUTTON)
         self.wait.until(EC.invisibility_of_element(self.LOADING_SPINNER))
         self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
 
     def enter_first_name(self, first_name):
+        logger.info("Entering first name: %s", first_name)
         self.wait.until(EC.invisibility_of_element(self.LOADING_SPINNER))
         self.type_text(self.FIRST_NAME_INPUT, first_name)
 
     def enter_middle_name(self, middle_name):
+        logger.info("Entering middle name: %s", middle_name)
         self.type_text(self.MIDDLE_NAME_INPUT, middle_name)
 
     def enter_last_name(self, last_name):
+        logger.info("Entering last name: %s", last_name)
         self.type_text(self.LAST_NAME_INPUT, last_name)
 
     def enter_employee_id(self, emp_id):
+        logger.info("Entering employee ID: %s", emp_id)
         self.type_text(self.EMPLOYEE_ID_INPUT, emp_id)
 
+    def upload_photo(self, photo_path):
+        logger.info("Uploading photo: %s", photo_path.name)
+        self.driver.find_element(*self.PHOTO_UPLOAD_INPUT).send_keys(str(photo_path))
+
     def enable_login_details(self):
+        logger.info("Enabling login details")
         self.click(self.CREATE_LOGIN_TOGGLE)
 
     def enter_username(self, username):
+        logger.info("Entering username: %s", username)
         self.type_text(self.USERNAME_INPUT, username)
 
     def enter_password(self, password):
+        logger.info("Entering password: ********")
         self.type_text(self.PASSWORD_INPUT, password)
 
     def enter_confirm_password(self, password):
+        logger.info("Entering confirm password: ********")
         self.type_text(self.CONFIRM_PASSWORD_INPUT, password)
 
-    def upload_photo(self, photo_path):
-        self.driver.find_element(*self.PHOTO_UPLOAD_INPUT).send_keys(str(photo_path))
-
     def click_save_button(self):
+        logger.info("Clicking Save")
         self.click(self.SAVE_BUTTON)
 
-    
+    # Combined methods: steps that always go together
+    def fill_personal_details(self, emp):
+        self.enter_first_name(emp["first_name"])
+        self.enter_middle_name(emp["middle_name"])
+        self.enter_last_name(emp["last_name"])
+        self.enter_employee_id(emp["employee_id"])
 
-   
-    
-
+    def fill_login_details(self, emp):
+        self.enable_login_details()
+        self.enter_username(emp["username"])
+        self.enter_password(emp["password"])
+        self.enter_confirm_password(emp["password"])
