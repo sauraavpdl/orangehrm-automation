@@ -1,76 +1,96 @@
-# OrangeHRM Login Automation
+# OrangeHRM Test Automation
 
-Automated test suite for the login functionality of [OrangeHRM Demo](https://opensource-demo.orangehrmlive.com/), built as a portfolio project to demonstrate QA automation fundamentals using Python, Selenium, and pytest.
+Automated UI test suite for [OrangeHRM Demo](https://opensource-demo.orangehrmlive.com/), built as a portfolio project to demonstrate QA automation fundamentals with Python, Selenium, and pytest using the Page Object Model.
 
 ## Tech Stack
+
 - Python
 - Selenium WebDriver
 - pytest
 - webdriver-manager
 
 ## Project Structure
+
+```
 orangehrm-automation/
+├── config/
+│   └── config.py              # Base URL and shared settings
+├── pages/                     # Page Objects: one class per page
+│   ├── base_page.py           # Shared actions (click, type, waits, toast)
+│   ├── login_page.py
+│   ├── pim_page.py
+│   ├── add_employee_page.py
+│   ├── add_job_title_page.py
+│   ├── pay_grade_page.py
+│   └── apply_leave_page.py
 ├── tests/
-│ ├── conftest.py # Shared fixtures (browser setup/teardown) and logging config
-│ ├── test_login.py # Automated login test cases
-│ ├── test_add_employee.py     
-│ └── test_delete_employee.py
-| └── test_add_candidate.py
-| └── utils.py
-│ └── test_cases_docs/               # Test cases documented in plain English before automation
-│       ├── TC01_login_valid.md
-│       ├── TC02_login_invalid.md
-│       ├── TC03_logout.md
-│       ├── TC04_add_employee.md
-│       ├── TC05_add_employee_with_login.md
-│       ├── TC06_edit_employee_details.md
+│   ├── test_login.py
+│   ├── test_add_employee.py
+│   ├── test_add_job_title.py
+│   ├── test_add_pay_grade.py
+│   ├── test_apply_leave.py
+│   └── test_assign_leave.py
+├── test_data/
+│   ├── login_data.py          # Valid and invalid credentials
+│   └── new_employee_data.py   # Base employee data
+├── utils/
+│   ├── data_generator.py      # Unique names, IDs and usernames per run
+│   └── wait_utils.py          # Reusable wait helpers
 ├── resources/
-│   └── images/                       # Test data assets (e.g. avatar upload files)
-│       ├── avatar800.png
-│       └── employee.png
-├── pytest.ini # pytest configuration and custom markers
-├── requirements.txt # Project dependencies
+│   ├── images/                # Upload files (e.g. employee photo)
+│   └── resume/                # Upload files for candidate tests
+├── conftest.py                # Fixtures (driver, logged_in_driver) and logging setup
+├── pytest.ini                 # pytest configuration and markers
+├── requirements.txt           # Dependencies
 └── README.md
 
-## Test Cases Covered
-| ID | Description | Status |
+
+## Test Coverage
+
+| Area | Scenarios | Status |
 |---|---|---|
-1. TC01 - Verify user can log in with valid credentials | Automated |
-2. TC02 - Verify user cannot log in with invalid credentials | Automated |
-3. TC03 - Verify user can logout from the site | Automated |
-4. TC04 - Verify user can add new employee | Automated |
-5. TC05 - Verify user can add new employee with login details |Automated|
-6. TC06 - Verify user can delete an existing employee successfully |Automated|
-7. TC07 - Verify error message is displayed when searching for a non-existent employee name |Automated|
-8. TC08 - Verify user can add a new candidate successfully |Automated|
+| Login | Valid login, invalid login | Automated |
+| Employee | Add without login details, add with login details, new employee can log in | Automated |
+| Admin | Add job title | Automated |
+| Admin | Add pay grade | Automated |
+| Leave | Apply leave, assign leave | Automated |
 
+## Key Practices
 
-## Key Practices Used
-- **Fixtures** (`conftest.py`) for reusable browser setup/teardown
+- **Page Object Model:** locators and actions live in `pages/`, and tests only describe the scenario
+- **Fixtures** in `conftest.py` for browser setup/teardown and an authenticated session
 - **Explicit waits** (`WebDriverWait`) instead of hard-coded sleeps
-- **Logging** for test execution traceability
-- **Custom markers** (`@pytest.mark.smoke`) for selective test runs
-- **Test cases documented before automation**, mirroring real QA workflow
+- **Unique test data per run** (random suffixes) so tests can be rerun without duplicate errors
+- **Data-driven credentials** kept separate from test logic in `test_data/`
+- **Logging** to console and `test_run.log`, with passwords masked
+- **Assertions with clear failure messages** (expected vs. actual)
 
 ## How to Run
+
 ```bash
 # Clone the repo
 git clone https://github.com/sauraavpdl/orangehrm-automation.git
 cd orangehrm-automation
 
-# Create and activate virtual environment
+# Create and activate a virtual environment
 python -m venv venv
 venv\Scripts\activate        # Windows
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run tests
-pytest tests/test_login.py -v
+# Run all tests
+pytest -v
 
-# Run only smoke tests
+# Run a single file
+pytest tests/test_add_employee.py -v
+
+# Run only smoke tests (if markers are defined in pytest.ini)
 pytest -m smoke
 ```
 
+Logs are written to `test_run.log` after each run.
+
 ## Author
-Saurav — QA Engineer transitioning to SDET
+
+Saurav, QA Engineer 
